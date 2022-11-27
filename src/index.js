@@ -20,25 +20,51 @@ function checksExistsUserAccount(request, response, next) {
 
   request.user = user;
 
-  next();
+  return next();
 }
 
 function checksCreateTodosUserAvailability(request, response, next) {
   const { user } = request;
 
-  const hasProPlan = user.pro;
+  const hasUserProPlan = user.pro;
 
-  if (!hasProPlan && user.todos.length >= 10) {
+  if (!hasUserProPlan && user.todos.length >= 10) {
     return response.status(403).json({
       error: 'User already has 10 to dos. To create more upgrade to Pro plan.',
     });
   }
 
-  next();
+  return next();
 }
 
 function checksTodoExists(request, response, next) {
-  // Complete aqui
+  const { id } = request.params;
+  const { username } = request.headers;
+
+  const isIdValid = validate(id);
+
+  if (!isIdValid) {
+    return response.status(400).json({ error: 'Id invalid' });
+  }
+
+  const user = users.find((user) => user.username === username);
+
+  if (!user) {
+    return response.status(404).json({ error: 'User not found' });
+  }
+
+  const userTodoWithId = user.todos.find((todo) => todo.id === id);
+
+  if (!userTodoWithId) {
+    return response
+      .status(404)
+      .json({ error: `User doesn't have to do with Id: ${id}` });
+  }
+
+  request.todo = userTodoWithId;
+  request.user = user;
+
+  return next();
 }
 
 function findUserById(request, response, next) {
