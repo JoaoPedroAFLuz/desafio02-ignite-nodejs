@@ -16,24 +16,24 @@ describe('checksTodoExists', () => {
     request = (params) => {
       return {
         ...params
-      }
+      };
     };
 
     response = () => {
-      const response = {}
+      const response = {};
 
       response.status = jest.fn((code) => {
         return {
           ...response,
           statusCode: code
-        }
+        };
       });
 
       response.json = jest.fn((obj) => {
         return {
           ...response,
           body: obj
-        }
+        };
       });
 
       return response;
@@ -49,7 +49,7 @@ describe('checksTodoExists', () => {
       deadline: new Date(),
       done: false,
       created_at: new Date()
-    }
+    };
 
     users.push({
       id: v4(),
@@ -64,8 +64,8 @@ describe('checksTodoExists', () => {
       params: { id: todo.id }
     });
 
-    const mockTodoSetter = jest.fn((todoData) => { this.todo = todoData });
-    const mockUserSetter = jest.fn((userData) => { this.user = userData });
+    const mockTodoSetter = jest.fn((todoData) => { this.todo = todoData; });
+    const mockUserSetter = jest.fn((userData) => { this.user = userData; });
 
     mockRequest.__defineSetter__('todo', mockTodoSetter);
     mockRequest.__defineSetter__('user', mockUserSetter);
@@ -95,15 +95,15 @@ describe('checksTodoExists', () => {
       deadline: new Date(),
       done: false,
       created_at: new Date()
-    }
+    };
 
     const mockRequest = request({
       headers: { username: 'atlas' },
       params: { id: todo.id }
     });
 
-    const mockTodoSetter = jest.fn((todoData) => { this.todo = todoData });
-    const mockUserSetter = jest.fn((userData) => { this.user = userData });
+    const mockTodoSetter = jest.fn((todoData) => { this.todo = todoData; });
+    const mockUserSetter = jest.fn((userData) => { this.user = userData; });
 
     mockRequest.__defineSetter__('todo', mockTodoSetter);
     mockRequest.__defineSetter__('user', mockUserSetter);
@@ -134,8 +134,8 @@ describe('checksTodoExists', () => {
       params: { id: 'invalid-id' }
     });
 
-    const mockTodoSetter = jest.fn((todoData) => { this.todo = todoData });
-    const mockUserSetter = jest.fn((userData) => { this.user = userData });
+    const mockTodoSetter = jest.fn((todoData) => { this.todo = todoData; });
+    const mockUserSetter = jest.fn((userData) => { this.user = userData; });
 
     mockRequest.__defineSetter__('todo', mockTodoSetter);
     mockRequest.__defineSetter__('user', mockUserSetter);
@@ -166,8 +166,8 @@ describe('checksTodoExists', () => {
       params: { id: v4() }
     });
 
-    const mockTodoSetter = jest.fn((todoData) => { this.todo = todoData });
-    const mockUserSetter = jest.fn((userData) => { this.user = userData });
+    const mockTodoSetter = jest.fn((todoData) => { this.todo = todoData; });
+    const mockUserSetter = jest.fn((userData) => { this.user = userData; });
 
     mockRequest.__defineSetter__('todo', mockTodoSetter);
     mockRequest.__defineSetter__('user', mockUserSetter);
@@ -183,4 +183,4 @@ describe('checksTodoExists', () => {
 
     expect(mockNext).not.toBeCalled();
   });
-})
+});

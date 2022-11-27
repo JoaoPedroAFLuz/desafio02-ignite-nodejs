@@ -24,7 +24,17 @@ function checksExistsUserAccount(request, response, next) {
 }
 
 function checksCreateTodosUserAvailability(request, response, next) {
-  // Complete aqui
+  const { user } = request;
+
+  const hasProPlan = user.pro;
+
+  if (!hasProPlan && user.todos.length >= 10) {
+    return response.status(403).json({
+      error: 'User already has 10 to dos. To create more upgrade to Pro plan.',
+    });
+  }
+
+  next();
 }
 
 function checksTodoExists(request, response, next) {
